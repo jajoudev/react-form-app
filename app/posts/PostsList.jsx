@@ -20,12 +20,20 @@ export function PostsList() {
             .catch(() => setLoading(false))
     }, [])
 
-    if (loading) return <p>Loading...</p>
-    if (posts.length > 0) return (
+    function handlePostCreated(newPost) {
+        setPosts(prevPosts => [newPost, ...prevPosts])
+    }
+
+    if (loading) {
+        return <p>Loading...</p>
+    }
+
+    return (
         <div>
-            <div>{posts.map(post => <Post key={post.id} {...post} />)}</div>
+            <Formulaire onPostCreated={handlePostCreated} />
+            <div>
+                {posts.map(post => <Post key={post.id} {...post} />)}
+            </div>
         </div>
     )
-
-    return <p>Pas de posts</p>
 }

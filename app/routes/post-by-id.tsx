@@ -13,7 +13,7 @@ export function meta({ }: Route.MetaArgs) {
 export default function PostById() {
     const params = useParams()
     const id = params.id
-    
+
     const [post, setPost] = useState(null)
     const [loading, setLoading] = useState(true)
 
@@ -22,7 +22,7 @@ export default function PostById() {
             "Authorization": "Bearer da8ba36b3a67c74d4d298115d6ee824565183d97577011e933621bd60c077edb",
             "Accept": "application/json"
         }
-        
+
         axios.get(`https://gorest.co.in/public/v2/posts/${id}`, { headers })
             .then((res) => {
                 setPost(res.data)
@@ -31,8 +31,12 @@ export default function PostById() {
             .catch(() => setLoading(false))
     }, [id])
 
-    if (loading) return <p>Loading...</p>
-    if (!post) return <p>Post introuvable</p>
+    if (loading) {
+        return <p>Loading...</p>
+    }
+    if (!post) {
+        return <p>Post introuvable</p>
+    }
 
     return (
         <div className="p-6">

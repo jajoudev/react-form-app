@@ -1,10 +1,7 @@
 import { useState } from "react"
 import axios from "axios"
-import { userContext } from "../../context"
 
-export function Formulaire() {
-    const user = context.get(userContext) 
-
+export function Formulaire({ onPostCreated }) {
     const [title, setTitle] = useState("")
     const [body, setBody] = useState("")
 
@@ -21,30 +18,42 @@ export function Formulaire() {
             body: body,
             user_id: 8680373
         }, { headers })
-            .then((response) => console.log(response.data))
+            .then((response) => {
+                console.log(response.data)
 
-        setTitle("")
-        setBody("")
+                if (onPostCreated) {
+                    onPostCreated(response.data)
+                }
+
+                setTitle("")
+                setBody("")
+            })
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
+        <div className="mb-6 flex justify-center">
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-1/2">
                 <div>
                     <input
                         type="text"
                         value={title}
+                        placeholder="Titre"
                         onChange={(event) => setTitle(event.target.value)}
+                        className="w-full p-2 border border-white rounded bg-transparent text-white placeholder-gray-400"
                     />
                 </div>
                 <div>
                     <input
                         type="text"
                         value={body}
+                        placeholder="Body"
                         onChange={(event) => setBody(event.target.value)}
+                        className="w-full p-2 border border-white rounded bg-transparent text-white placeholder-gray-400"
                     />
                 </div>
-                <button type="submit">Créer</button>
+                <button type="submit" className="border border-white p-2 rounded hover:bg-white hover:text-black transition">
+                    Créer
+                </button>
             </form>
         </div>
     )

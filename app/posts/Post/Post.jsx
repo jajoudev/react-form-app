@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router"
 
-export function Post({ id, user_id, title, body }) {
+export function Post({ id, title, body }) {
     const navigate = useNavigate()
 
     return (
